@@ -4,13 +4,15 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
+const env= require('dotenv')
+env.config('.env')
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs'); 
 app.use(express.static(path.join(__dirname, 'public')));
 // MongoDB connection
-mongoose.connect('mongodb+srv://anshikapatel:123456%40Ap@cluster0.iimiicy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0/shanti', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.mongo_uri, { useNewUrlParser: true, useUnifiedTopology: true });
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log('Connected to MongoDBATLAS');
